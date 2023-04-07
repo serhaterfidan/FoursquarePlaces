@@ -1,13 +1,18 @@
 <androidx.cardview.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/spacing_medium"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:alpha="0.7"
+    android:layout_margin="@dimen/spacing_middle"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_medium">
+        android:alpha="0.7"
+        android:background="@color/design_default_color_primary_dark"
+        android:padding="@dimen/spacing_middle">
 
         <TextView
             android:id="@+id/place_name_text_view"

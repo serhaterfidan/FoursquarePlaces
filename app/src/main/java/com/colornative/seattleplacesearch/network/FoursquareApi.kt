@@ -1,7 +1,7 @@
 package com.colornative.seattleplacesearch.network
 
-import com.colornative.seattleplacesearch.PlaceDetails
-import com.colornative.seattleplacesearch.PlaceSearchResponse
+import com.colornative.seattleplacesearch.model.PlaceDetails
+import com.colornative.seattleplacesearch.model.PlaceSearchResponse
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Response
@@ -31,11 +31,9 @@ interface FoursquareApi {
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val original: Request = chain.request()
-                    val url = original.url.newBuilder()
-                        .addQueryParameter("Authorization", "fsq3Jzk4eCeQB77qZGc8Sqw/RNBtI0ifjySXLQQbJRPWngk=")
-                        .build()
                     val requestBuilder: Request.Builder = original.newBuilder()
-                        .url(url)
+                        .header("accept", "application/json")
+                        .header("Authorization", "fsq3G5hn8OgY8414PdcxeBXeuIuXHo0suoT1kfARnp5+bP0=")
                     val request: Request = requestBuilder.build()
                     chain.proceed(request)
                 }

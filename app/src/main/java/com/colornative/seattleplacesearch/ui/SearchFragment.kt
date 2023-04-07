@@ -3,6 +3,7 @@ package com.colornative.seattleplacesearch.ui
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.colornative.seattleplacesearch.network.SearchViewModel
 import com.colornative.seattleplacesearch.databinding.FragmentSearchBinding
 import com.google.android.gms.location.LocationServices
@@ -56,7 +59,7 @@ class SearchFragment : Fragment() {
                 fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                     // Use the location coordinates to search for venues
                     val latLongString = "${location.latitude},${location.longitude}"
-                    viewModel.searchVenues(binding.searchEditText.text.toString(), latLongString)
+                    viewModel.searchVenues(binding.textInputLayout.editText?.text.toString(), latLongString)
                 }
 
             } else {
@@ -75,7 +78,7 @@ class SearchFragment : Fragment() {
                 fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                     // Use the location coordinates to search for venues
                     val latLongString = "${location.latitude},${location.longitude}"
-                    viewModel.searchVenues(binding.searchEditText.text.toString(), latLongString)
+                    viewModel.searchVenues(binding.textInputLayout.editText?.text.toString(), latLongString)
                 }
             } else
                 ActivityCompat.requestPermissions(
@@ -94,6 +97,8 @@ class SearchFragment : Fragment() {
                 findNavController().navigate(action)
             }
             binding.venueList.adapter = adapter
+            val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            binding.venueList.layoutManager = layoutManager
             adapter.submitList(venues)
         }
 

@@ -26,8 +26,12 @@ class VenueListAdapter(private val onItemClick: (Place) -> Unit) : ListAdapter<P
             binding.placeNameTextView.text = item.name
             binding.placeAddressTextView.text = item.location.address
             binding.placeDistanceTextView.text = "${item.distance}m"
-            binding.placeCategoriesTextView.text = item.categories.joinToString(", ") { it.name }
-            binding.placeRelatedPlacesTextView.text = item.related_places.results.joinToString(", ")
+            binding.placeCategoriesTextView.text = item.categories?.let {
+                it.joinToString(", ") { category -> category.name }
+            }
+            binding.placeRelatedPlacesTextView.text = item.related_places?.results?.let {
+                it.joinToString(", ")
+            }
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }

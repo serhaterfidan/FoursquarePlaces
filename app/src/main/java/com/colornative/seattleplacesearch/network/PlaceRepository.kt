@@ -1,6 +1,5 @@
 package com.colornative.seattleplacesearch.network
 
-import com.colornative.seattleplacesearch.PlaceDetails
 import com.colornative.seattleplacesearch.model.Place
 import com.colornative.seattleplacesearch.model.PlaceDetails
 
