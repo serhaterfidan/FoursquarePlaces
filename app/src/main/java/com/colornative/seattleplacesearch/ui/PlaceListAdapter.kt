@@ -1,14 +1,16 @@
 package com.colornative.seattleplacesearch.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.colornative.seattleplacesearch.databinding.ListItemVenueBinding
 import com.colornative.seattleplacesearch.model.Place
 
-class VenueListAdapter(private val onItemClick: (Place) -> Unit) : ListAdapter<Place, VenueListAdapter.ViewHolder>(VenueDiffCallback()) {
+class PlaceListAdapter(var context: Context,private val onItemClick: (Place) -> Unit) : ListAdapter<Place, PlaceListAdapter.ViewHolder>(PlaceDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -32,12 +34,16 @@ class VenueListAdapter(private val onItemClick: (Place) -> Unit) : ListAdapter<P
             binding.placeRelatedPlacesTextView.text = item.related_places?.results?.let {
                 it.joinToString(", ")
             }
+            // Load the image using Glide
+            Glide.with(context)
+                .load(item.categories.getOrNull(0)?.icon?.prefix+item.categories.getOrNull(0)?.icon?.suffix)
+                .into(binding.placeImageView)
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 }
 
-class VenueDiffCallback : DiffUtil.ItemCallback<Place>() {
+class PlaceDiffCallback : DiffUtil.ItemCallback<Place>() {
 
     override fun areItemsTheSame(oldItem: Place, newItem: Place): Boolean {
         return oldItem.fsq_id == newItem.fsq_id

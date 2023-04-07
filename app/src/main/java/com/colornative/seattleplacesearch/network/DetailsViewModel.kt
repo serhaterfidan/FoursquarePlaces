@@ -9,6 +9,10 @@ import kotlinx.coroutines.launch
 
 class DetailsViewModel(private val repository: PlaceRepository) : ViewModel() {
 
+    constructor() : this(PlaceRepository()) {
+        // Optional initialization code
+    }
+
     private val _place = MutableLiveData<PlaceDetails>()
     val place: LiveData<PlaceDetails>
         get() = _place

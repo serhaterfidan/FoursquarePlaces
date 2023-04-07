@@ -20,7 +20,7 @@ interface FoursquareApi {
         @Query("v") version: String = "20211210"
     ): Response<PlaceSearchResponse>
 
-    @GET("venues/{id}")
+    @GET("places/{id}")
     suspend fun getPlaceDetails(@Path("id") id: String): Response<PlaceDetails>
 
     companion object {

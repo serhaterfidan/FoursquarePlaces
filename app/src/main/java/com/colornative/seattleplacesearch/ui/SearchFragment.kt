@@ -2,13 +2,15 @@ package com.colornative.seattleplacesearch.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.colornative.seattleplacesearch.R
 import com.colornative.seattleplacesearch.network.SearchViewModel
 import com.colornative.seattleplacesearch.databinding.FragmentSearchBinding
 import com.google.android.gms.location.LocationServices
@@ -60,6 +63,8 @@ class SearchFragment : Fragment() {
                     // Use the location coordinates to search for venues
                     val latLongString = "${location.latitude},${location.longitude}"
                     viewModel.searchVenues(binding.textInputLayout.editText?.text.toString(), latLongString)
+                    val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(view?.windowToken, 0)
                 }
 
             } else {
@@ -69,6 +74,12 @@ class SearchFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.app_name)
+    }
+
+    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -79,6 +90,8 @@ class SearchFragment : Fragment() {
                     // Use the location coordinates to search for venues
                     val latLongString = "${location.latitude},${location.longitude}"
                     viewModel.searchVenues(binding.textInputLayout.editText?.text.toString(), latLongString)
+                    val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
             } else
                 ActivityCompat.requestPermissions(
@@ -92,8 +105,9 @@ class SearchFragment : Fragment() {
         }
 
         viewModel.venues.observe(viewLifecycleOwner) { venues ->
-            val adapter = VenueListAdapter { venue ->
-                val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment(venue.fsq_id)
+            val adapter = PlaceListAdapter(requireActivity()) { venue ->
+                val action =
+                    SearchFragmentDirections.actionSearchFragmentToDetailsFragment(venue.fsq_id)
                 findNavController().navigate(action)
             }
             binding.venueList.adapter = adapter

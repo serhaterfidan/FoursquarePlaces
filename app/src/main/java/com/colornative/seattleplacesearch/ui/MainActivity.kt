@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController)
 
-        binding.toolbar.title = getString(R.string.app_name)
         binding.toolbar.isTitleCentered = true
+        binding.toolbar.title = getString(R.string.app_name)
         binding.toolbar.setBackgroundColor(Color.BLUE)
         binding.toolbar.setTitleTextColor(Color.WHITE)
 
