@@ -25,6 +25,12 @@
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/placeMapView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            map:liteMode="true" />
+
         <TextView
             android:id="@+id/placeNameTextView"
             android:layout_width="match_parent"
@@ -78,12 +84,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/design_default_color_primary"
             android:textSize="16sp" />
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/placeMapView"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            map:liteMode="true" />
 
     </LinearLayout>
 
